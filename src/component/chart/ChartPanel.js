@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import GraphLabel from './GraphLabel';
-import baselines from './Graph';
+import AdvGraph from './AdvGraph';
 
 class ChartPanel extends Component {
     render() {
         return (
             <div className="chartPanel">
                 <GraphLabel />
-                <baselines />
+                <AdvGraph />
             </div>
         );
     }

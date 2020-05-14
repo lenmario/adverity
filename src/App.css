@@ -1,13 +1,13 @@
 .App {
   display: flex;
   flex-flow: column wrap;
-  height: 100vh;
+  height: calc(100vh - 46px);
 }
 
 .filterPanel {
   background-color: lightblue;
   padding: 15px;
-  min-height: 100%;
+  min-height: calc(100vh - 30px);
   width: 300px;
   order: -1;
   flex: 0 0 auto;
@@ -15,7 +15,9 @@
 
 .chartPanel {
   padding: 15px;
-  width: calc(100% - 300px);
+  width: calc(100% - 360px);
+  min-height: calc(100vh - 30px);
+  overflow: auto;
 }
 
 .banner {
