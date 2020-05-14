@@ -1,8 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="b078cff2-1c6c-45b9-a8e3-21fe567a21a3" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/component/chart/ChartPanel.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/component/chart/Graph.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/component/chart/GraphLabel.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/component/filter/Campaign.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/component/filter/DataSource.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/component/filter/FilterPanel.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="ProjectId" id="1bqZEdzij5PLEFrFDS6fIMlqTZu" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\_tatino\adverity\adverity\src\component\filter" />
+      <recent name="C:\_tatino\adverity\adverity\src\component\chart" />
+    </key>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b078cff2-1c6c-45b9-a8e3-21fe567a21a3" name="Default Changelist" comment="" />
+      <created>1589361473262</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1589361473262</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="617" y="215" key="#Plugins" timestamp="1589369681917">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
+    <state x="617" y="215" key="#Plugins/0.0.2048.1112@0.0.2048.1112" timestamp="1589369681917" />
+    <state x="663" y="244" key="#com.intellij.ide.fileTemplates.ui.ConfigureTemplatesDialog" timestamp="1589366122433">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
+    <state x="663" y="244" key="#com.intellij.ide.fileTemplates.ui.ConfigureTemplatesDialog/0.0.2048.1112@0.0.2048.1112" timestamp="1589366122433" />
+    <state x="533" y="199" key="SettingsEditor" timestamp="1589367148881">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
+    <state x="533" y="199" key="SettingsEditor/0.0.2048.1112@0.0.2048.1112" timestamp="1589367148881" />
+    <state x="721" y="380" key="com.intellij.ide.util.TipDialog" timestamp="1589470165752">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
+    <state x="721" y="380" key="com.intellij.ide.util.TipDialog/0.0.2048.1112@0.0.2048.1112" timestamp="1589470165752" />
+    <state x="465" y="168" key="new project wizard" timestamp="1589367378570">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
+    <state x="465" y="168" key="new project wizard/0.0.2048.1112@0.0.2048.1112" timestamp="1589367378570" />
+    <state x="687" y="243" width="672" height="678" key="search.everywhere.popup" timestamp="1589367878145">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
+    <state x="687" y="243" width="672" height="678" key="search.everywhere.popup/0.0.2048.1112@0.0.2048.1112" timestamp="1589367878145" />
   </component>
 </project>
