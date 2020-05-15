@@ -10,7 +10,7 @@ class DataSource extends Component {
             return <div/>;
         }
 
-        const options = this.props.selectItems.map(item => ({value: item, label: item}));
+        const options = this.props.selectItems.sort().map(item => ({value: item, label: item}));
 
         return (
             <div className="filterSection">
