@@ -8,14 +8,14 @@
   background-color: lightblue;
   padding: 15px;
   min-height: calc(100vh - 30px);
-  width: 300px;
+  width: 450px;
   order: -1;
   flex: 0 0 auto;
 }
 
 .chartPanel {
   padding: 15px;
-  width: calc(100% - 360px);
+  width: calc(100% - 510px);
   min-height: calc(100vh - 30px);
   overflow: auto;
 }
@@ -64,11 +64,3 @@
 
 .filterButton {
 }
-
-.ListItemEven,
-.ListItemOdd {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-

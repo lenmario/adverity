@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { FixedSizeList as List } from 'react-window';
 
-const height = 50;
+const height = 35;
 
 class MenuList extends Component {
     render() {

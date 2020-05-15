@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import FormPanel from '../FormPanel';
 import Select from 'react-select';
+import MenuList from '../MenuList';
 
 class DataSource extends Component {
     render() {
@@ -14,7 +15,9 @@ class DataSource extends Component {
         return (
             <div className="filterSection">
                 <FormPanel formLabel="Datasource" />
-                <Select isMulti={true} options={options} />
+                <Select isMulti={true} 
+                    components={{MenuList}} 
+                    options={options} />
             </div>
         );
     }
