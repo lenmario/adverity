@@ -14,8 +14,8 @@ class FilterPanel extends Component {
                 <div className="banner">Filter dimension values</div>
                 <div className="filterColumns">
                     <div className="filterColumnSections">
-                        <DataSource />
-                        <Campaign />
+                        <DataSource selectItems={this.props.selectItems.datasources} />
+                        <Campaign  selectItems={this.props.selectItems.campaigns} />
                     </div>
                     <div className="filterColumnButtons">
                         <button className="filterButton" onClick={() => {this.onApply()}} >Apply</button>
