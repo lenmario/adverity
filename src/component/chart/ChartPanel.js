@@ -7,7 +7,7 @@ class ChartPanel extends Component {
         return (
             <div className="chartPanel">
                 <GraphLabel />
-                <AdvGraph />
+                <AdvGraph data={this.props.data} />
             </div>
         );
     }

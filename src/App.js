@@ -52,7 +52,7 @@ class App extends Component {
     return (
       <div className="App">
         <FilterPanel selectItems={selectItems} />
-        <ChartPanel />
+        <ChartPanel data={data}/>
       </div>
     );
   }
