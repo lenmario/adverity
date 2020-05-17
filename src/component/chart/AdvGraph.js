@@ -1,87 +1,143 @@
 import React, { Component } from 'react';
-import { 
+import {
     TimeSeries
 } from 'pondjs';
-import { 
+import {
     Charts,
     ChartContainer,
     ChartRow,
     YAxis,
     LineChart,
-    Resizable
+    Resizable,
+    styler,
+    Legend
 } from 'react-timeseries-charts';
+import { timer } from 'd3';
 
 
-const styleClicks = {
-    value: {
-        stroke: "#a02c2c",
-        opacity: 0.2
+const style = styler([
+    { key: "Clicks", color: "#2ca02c"},
+    { key: "Impressions", color: "#9467bd"},
+]);
+
+const legend = [
+    {
+        key: "Clicks",
+        label: "Clicks",
+        disabled: false
+    },
+    {
+        key: "Impressions",
+        label: "Impressions",
+        disabled: false
     }
-};
-const styleImpressions = {
-    value: {
-        stroke: "#FF5733",
-        opacity: 0.2
-    }
-};
+];
 
 class AdvGraph extends React.Component {
     state = {
+        timerange: null,
+        clicksSeries: null,
+        impressionsSeries: null,
     };
 
-    render() {
-
+    componentDidMount() {
         const clicksPoints = this.props.data.map(c => [AdvGraph.getDateTime(c.Date), AdvGraph.normalizeNumber(c.Clicks)]);
         const impressionsPoints = this.props.data.map(c => [AdvGraph.getDateTime(c.Date), AdvGraph.normalizeNumber(c.Impressions)]);
-
-
 
         const clicksSeries = new TimeSeries({
             name: "Clicks",
             columns: ["time", "value"],
             points: clicksPoints
         });
-        
+
         const impressionsSeries = new TimeSeries({
             name: "Impressions",
             columns: ["time", "value"],
             points: impressionsPoints
         });
 
+        this.setState({timerange: clicksSeries.timerange(), clicksSeries, impressionsSeries});
+    }
+
+    render() {
+
+        const { timerange, clicksSeries, impressionsSeries } = this.state;
+
+        if (!timerange || !clicksSeries || !impressionsSeries) {
+            return <p>Loading ...</p>;
+        }
+
         return (
             <Resizable>
+                <div>
                 <ChartContainer
                     title=""
-                    titleStyle={{ fill: "#555", fontWeight: 500 }}
-                    timeRange={clicksSeries.timerange()}
+                    timeRange={timerange}
                     format="%b '%y"
-                    timeAxisTickCount={5}
+                    // padding={20}
+                    enableDragZoom
+                    onTimeRangeChanged={this.handleTimeRangeChange}
+                    // timeAxisTickCount={5}
                 >
-                    <ChartRow height="150">
+                    <ChartRow height="500">
                         <YAxis
                             id="clicks"
                             label="Clicks"
+                            labelOffset={-10}
                             min={clicksSeries.min()}
                             max={clicksSeries.max()}
                             width="60"
+                            // showGrid
+                            // hideAxisLine
+                            transition={300}
+                            format=",.0f"
+                            type="linear"
                         />
+                        <Charts>
+                            <LineChart 
+                                key="Clicks" 
+                                axis="clicks" 
+                                // columns={["Clicks"]} 
+                                // style={style}
+                                series={clicksSeries} 
+                                interpolation="curveBasis"
+                            />
+                            <LineChart 
+                                key="Impressions" 
+                                axis="impressions" 
+                                // columns={["Impressions"]} 
+                                // style={style}
+                                series={impressionsSeries} 
+                                interpolation="curveBasis"
+                            />
+                        </Charts>
                         <YAxis
                             id="impressions"
                             label="Impressions"
+                            labelOffset={12}
                             min={impressionsSeries.min()}
                             max={impressionsSeries.max()}
                             width="60"
+                            transition={300}
+                            format=",.0f"
+                            type="linear"
                         />
-                        <Charts>
-                        <LineChart axis="clicks" series={clicksSeries} style={styleClicks} />
-                        <LineChart axis="impressions" series={impressionsSeries} style={styleImpressions} />
-                        </Charts>
                     </ChartRow>
                 </ChartContainer>
+                <Legend
+                    type="line"
+                    style={style}
+                    categories={legend}
+                />
+                </div>
             </Resizable>
         );
     }
 
+    handleTimeRangeChange = timerange => {
+        this.setState({ timerange });
+    };
+    
     /**
      * Converts string date to UTC
      * @param {*} dateString date in format DD.MM.YYYY
