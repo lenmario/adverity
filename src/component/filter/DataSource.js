@@ -1,22 +1,32 @@
-import React, { } from 'react';
+import React, { useState, useEffect } from 'react';
 import FormPanel from '../FormPanel';
 import Select from 'react-select';
 import MenuList from '../MenuList';
 
 function DataSource(props) {
 
-    if (!props.selectItems) {
-        return <div />;
-    }
+    const [options, setOptions] = useState([]);
+    const [selectedValue, setSelectedValue] = useState([]);
 
-    const options = props.selectItems ? props.selectItems.sort().map(item => ({ value: item, label: item })) : [];
+    // initial load
+    useEffect(() => {
+        const options = props.selectItems ? props.selectItems.sort().map(item => ({ value: item, label: item })) : [];
+        setOptions(options);
+    }, []);  
 
     return (
         <div className="filterSection">
             <FormPanel formLabel="Datasource" />
-            <Select isMulti={true}
+            <Select 
+                isMulti={true}
                 components={{ MenuList }}
-                options={options} />
+                options={options} 
+                value={selectedValue}
+                onChange={(datasources) => {
+                    props.onDatasourcesChange(datasources);
+                    setSelectedValue(datasources);
+                }}
+                />
         </div>
     );
 }

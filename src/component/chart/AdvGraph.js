@@ -60,7 +60,7 @@ function AdvGraph(props) {
                     format="%d.%m.'%y"
                     // padding={20}
                     enableDragZoom
-                    onTimeRangeChanged={() => setTimerange(timerange)}
+                    onTimeRangeChanged={(t) => setTimerange(t)}
                 // timeAxisTickCount={5}
                 >
                     <ChartRow height="300">

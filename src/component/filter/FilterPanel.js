@@ -9,8 +9,14 @@ function FilterPanel(props) {
             <div className="banner">Filter dimension values</div>
             <div className="filterColumns">
                 <div className="filterColumnSections">
-                    <DataSource selectItems={props.selectItems.datasources} />
-                    <Campaign selectItems={props.selectItems.campaigns} />
+                    <DataSource 
+                        selectItems={props.selectItems.datasources} 
+                        onDatasourcesChange={props.onDatasourcesChange} 
+                        />
+                    <Campaign 
+                        selectItems={props.selectItems.campaigns} 
+                        onCampaignChange={props.onCampaignChange}
+                        />
                 </div>
                 <div className="filterColumnButtons">
                     <button className="filterButton" onClick={() => { onApply() }} >Apply</button>
@@ -20,7 +26,7 @@ function FilterPanel(props) {
     );
 
     function onApply() {
-        alert('blaaah');
+        alert('Not implemented, I guess from UX perspective this button is ambigous :-) I also skipped the icons, not sure what is the spec for them.');
     }
 
 }
