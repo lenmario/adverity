@@ -3,6 +3,8 @@ import FormPanel from '../FormPanel';
 import Select from 'react-select';
 import MenuList from '../MenuList';
 
+export const OPTION_DATASOURCES_ALL = '<All Datasources>';
+
 function DataSource(props) {
 
     const [options, setOptions] = useState([]);
@@ -21,6 +23,7 @@ function DataSource(props) {
                 isMulti={true}
                 components={{ MenuList }}
                 options={options} 
+                placeholder={OPTION_DATASOURCES_ALL}
                 value={selectedValue}
                 onChange={(datasources) => {
                     props.onDatasourcesChange(datasources);

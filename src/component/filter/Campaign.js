@@ -24,6 +24,7 @@ function Campaign(props) {
             <Select 
                 components={{ MenuList }} 
                 options={options} 
+                placeholder={OPTION_CAMPAIGNS_ALL}
                 value={selectedValue}
                 onChange={(campaign) => {
                     props.onCampaignChange(campaign);

@@ -5,7 +5,7 @@ import AdvGraph from './AdvGraph';
 function ChartPanel(props) {
     return (
         <div className="chartPanel">
-            <GraphLabel />
+            <GraphLabel datasources={props.datasources} campaign={props.campaign} />
             <AdvGraph data={props.data} />
         </div>
     );

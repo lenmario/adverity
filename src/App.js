@@ -43,41 +43,13 @@ function App(props) {
   // handling of filters (datasources, campaign)
   useEffect(() => {
 
-    console.log('--------------- Filter changed! --------------');
-    console.log(selectedCampaign);
-    console.log(selectedDatasources);
-
-
-    // TODO !!!!!
-    console.log('--------------- Data --------------');
-    console.log(data);
-
-    const datasources = selectedDatasources && selectedDatasources.length ?
-      selectedDatasources.map(ds => ds.value) : [];
-
-    const campaigns = selectedCampaign && selectedCampaign.value ?
-      [selectedCampaign.value] : [];
-
-    console.log('--------------- datasources --------------');
-    console.log(datasources);
-    console.log('--------------- campaigns --------------');
-    console.log(campaigns);
-
-    // const result = _(data)
-    //   // .intersectionBy(campaigns, 'Campaign')
-    //   .intersectionBy(datasources, 'Datasource')
-    //   .value()
-    //   ;
-
-    // const result = _.intersectionBy(data, datasources, 'Datasource').values();
-
+    const datasources = getDatasourcesArr(selectedDatasources);
+    const campaigns = getCampaignsArr(selectedCampaign);
+     
     const result = data.filter(d => 
       (!datasources.length || datasources.includes(d.Datasource)) 
       && (!campaigns.length || campaigns.includes(d.Campaign))
       );
-
-    console.log('--------------- result --------------');
-    console.log(result);
 
     setFilteredData(result);
 
@@ -93,7 +65,11 @@ function App(props) {
             onDatasourcesChange={(ds) => { setSelectedDatasources(ds) }}
             onCampaignChange={(c) => { setSelectedCampaign(c) }}
           />
-          <ChartPanel data={filteredData} />
+          <ChartPanel 
+            data={filteredData} 
+            datasources={getDatasourcesArr(selectedDatasources)} 
+            campaign={getCampaignsArr(selectedCampaign)} 
+          />
         </div>)
       }
     </div>
@@ -101,12 +77,20 @@ function App(props) {
 
 }
 
-function getUniqueItems(data, name) {
+const getUniqueItems = (data, name) => {
   if (!data) {
     return [];
   }
   return data.map(item => item[name]).filter((x, i, a) => a.indexOf(x) === i)
 }
+
+const getDatasourcesArr = (selectedDatasources) => (
+    selectedDatasources && selectedDatasources.length ? selectedDatasources.map(ds => ds.value) : []
+    );
+
+const getCampaignsArr = (selectedCampaign) => (
+    selectedCampaign && selectedCampaign.value ? [selectedCampaign.value] : []
+    );
 
 
 export default App;

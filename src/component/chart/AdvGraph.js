@@ -45,7 +45,12 @@ function AdvGraph(props) {
         setClicksSeries(clicksSeries);
         setImpressionsSeries(impressionsSeries);
         setTimerange(clicksSeries.timerange());
-    }, []);
+    }, [props.data]);
+
+
+    if (!props.data || !props.data.length) {
+        return <p>No data</p>;
+    }
 
     if (!timerange || !clicksSeries || !impressionsSeries) {
         return <p>Loading ...</p>;
@@ -114,12 +119,13 @@ function AdvGraph(props) {
                 style={style}
                 categories={legend}
             />
+            <p>Note: Use mouse wheel to zoom in/out. Drag mouse cursor left/right to select area in graph.</p>
         </div>
     );
 
 }
 
-function createTimeSeries(data, name) {
+const createTimeSeries = (data, name) => {
     if (!data || !name || !name.length || name.length === 0) {
         return null;
     }
@@ -147,7 +153,7 @@ function createTimeSeries(data, name) {
  * @param {*} dateString date in format DD.MM.YYYY
  * @returns UTC date time or null (also for invalid input)
  */
-function getDateTime(dateString) {
+const getDateTime = (dateString) => {
     if (!dateString || dateString == null || !dateString.length || dateString.length != 10) {
         return null;
     }
@@ -168,7 +174,7 @@ function getDateTime(dateString) {
  * @param {*} str numeric string 
  * @returns number; for non numeric strings returns 0
  */
-function normalizeNumber(str) {
+const normalizeNumber = (str) => {
     if (typeof str === 'undefined' || str == null) {
         return 0;
     }

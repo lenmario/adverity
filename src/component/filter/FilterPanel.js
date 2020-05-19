@@ -25,10 +25,11 @@ function FilterPanel(props) {
         </div>
     );
 
-    function onApply() {
-        alert('Not implemented, I guess from UX perspective this button is ambigous :-) I also skipped the icons, not sure what is the spec for them.');
-    }
-
 }
+
+const onApply = () => {
+    alert('Not implemented, button is ambigous. Also the icons are there just to show the mockup.');
+}
+
 
 export default FilterPanel;
