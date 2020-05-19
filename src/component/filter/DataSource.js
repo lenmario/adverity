@@ -14,7 +14,7 @@ function DataSource(props) {
     useEffect(() => {
         const options = props.selectItems ? props.selectItems.sort().map(item => ({ value: item, label: item })) : [];
         setOptions(options);
-    }, []);  
+    }, [props.selectItems]);  
 
     return (
         <div className="filterSection">

@@ -16,7 +16,7 @@ function Campaign(props) {
         const allCampaigns = {value: null, label: OPTION_CAMPAIGNS_ALL};        
         setOptions([allCampaigns, ...options]);
         setSelectedValue(allCampaigns);
-    }, []);  
+    }, [props.selectItems]);  
 
     return (
         <div className="filterSection">

@@ -1,13 +1,9 @@
 import React, { useState, useEffect } from 'react';
 
-import logo from './logo.svg';
 import './App.css';
 import FilterPanel from './component/filter/FilterPanel';
 import ChartPanel from './component/chart/ChartPanel';
 import * as d3 from 'd3';
-import _ from 'lodash';
-import { OPTION_CAMPAIGNS_ALL } from './component/filter/Campaign';
-import DataSource from './component/filter/DataSource';
 
 function App(props) {
 
@@ -53,7 +49,7 @@ function App(props) {
 
     setFilteredData(result);
 
-  }, [selectedDatasources, selectedCampaign]);
+  }, [data, selectedDatasources, selectedCampaign]);
 
   return (
     <div>

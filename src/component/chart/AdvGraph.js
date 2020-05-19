@@ -154,7 +154,7 @@ const createTimeSeries = (data, name) => {
  * @returns UTC date time or null (also for invalid input)
  */
 const getDateTime = (dateString) => {
-    if (!dateString || dateString == null || !dateString.length || dateString.length != 10) {
+    if (!dateString || dateString === null || !dateString.length || dateString.length !== 10) {
         return null;
     }
 

@@ -14,7 +14,7 @@ const getArrayItemsToString = (items) => {
     if (!items || !items.length) {
         return '<All>';
     }  
-    return items.map(i => '\"' + i + '\"').join(', ');
+    return items.map(i => '"' + i + '"').join(', ');
 };
 
 export default GraphLabel;
