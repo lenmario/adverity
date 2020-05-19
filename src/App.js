@@ -1,69 +1,57 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import logo from './logo.svg';
 import './App.css';
 import FilterPanel from './component/filter/FilterPanel';
 import ChartPanel from './component/chart/ChartPanel';
 import * as d3 from 'd3';
-import _ from 'lodash';
 
-class App extends Component {
+function App(props) {
 
-  constructor(props) {
-    super(props);
+  const [data, setData] = useState([]);
+  const [selectItems, setSelectItems] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-    this.state = {
-      data: null,
-      selectItems: null,
-      error: null,
-      isLoading: true,
-    };
-  }
+  useEffect(() => {
+    setIsLoading(true);
 
-  componentDidMount() {
-    this.setState({ isLoading: true });
+    const fetchData = async () => {
+      const data = await d3.csv("/adverity.csv");
+      setData(data);
 
-    d3.csv("/adverity.csv")
-      .then(data => {
+      const selectItems = {
+        datasources: getUniqueItems(data, 'Datasource'),
+        campaigns: getUniqueItems(data, 'Campaign'),
+      };
+      setSelectItems(selectItems);
 
-        const selectItems = {
-          datasources: App.getUniqueItems(data, 'Datasource'),
-          campaigns: App.getUniqueItems(data, 'Campaign'),
-        };
-    
-        this.setState({ data, isLoading: false, selectItems});
-
-      })
-      .catch(error => this.setState({ error, isLoading: false }));
-  }
-
-  render() {
-
-    const { data, selectItems, error, isLoading } = this.state;
-
-    if (error) {
-      return <p>{error.message}</p>;
+      setIsLoading(false);
     }
 
-    if (isLoading) {
-      return <p>Loading ...</p>;
-    }
+    fetchData().catch(error => setError(error));
+  }, []);
 
-    return (
-      <div className="App">
-        <FilterPanel selectItems={selectItems} />
-        <ChartPanel data={data}/>
-      </div>
-    );
-  }
-
-  static getUniqueItems(data, name) {
-    if (!data) {
-      return [];
-    }
-    return data.map(item => item[name]).filter((x, i, a) => a.indexOf(x) === i)
-  }
-
+  return (
+    <div>
+      {error && <p>{error.message}</p>}
+      {isLoading ? (<p>Loading ...</p>) :
+        (<div className="App">
+          <FilterPanel selectItems={selectItems} />
+          <ChartPanel data={data} />
+        </div>)
+      }
+    </div>
+  )
+  
 }
+
+function getUniqueItems(data, name) {
+  if (!data) {
+    return [];
+  }
+  return data.map(item => item[name]).filter((x, i, a) => a.indexOf(x) === i)
+}
+
 
 export default App;

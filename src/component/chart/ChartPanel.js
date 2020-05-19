@@ -1,16 +1,14 @@
-import React, { Component } from 'react';
+import React, { } from 'react';
 import GraphLabel from './GraphLabel';
 import AdvGraph from './AdvGraph';
 
-class ChartPanel extends Component {
-    render() {
-        return (
-            <div className="chartPanel">
-                <GraphLabel />
-                <AdvGraph data={this.props.data} />
-            </div>
-        );
-    }
+function ChartPanel(props) {
+    return (
+        <div className="chartPanel">
+            <GraphLabel />
+            <AdvGraph data={props.data} />
+        </div>
+    );
 }
 
 export default ChartPanel;

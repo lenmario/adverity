@@ -1,29 +1,28 @@
-import React, { Component } from 'react';
+import React, { } from 'react';
 import DataSource from './DataSource';
 import Campaign from './Campaign';
 
-class FilterPanel extends Component {
+function FilterPanel(props) {
 
-    onApply() {
+    return (
+        <div className="filterPanel">
+            <div className="banner">Filter dimension values</div>
+            <div className="filterColumns">
+                <div className="filterColumnSections">
+                    <DataSource selectItems={props.selectItems.datasources} />
+                    <Campaign selectItems={props.selectItems.campaigns} />
+                </div>
+                <div className="filterColumnButtons">
+                    <button className="filterButton" onClick={() => { onApply() }} >Apply</button>
+                </div>
+            </div>
+        </div>
+    );
+
+    function onApply() {
         alert('blaaah');
     }
 
-    render() {
-        return (
-            <div className="filterPanel">
-                <div className="banner">Filter dimension values</div>
-                <div className="filterColumns">
-                    <div className="filterColumnSections">
-                        <DataSource selectItems={this.props.selectItems.datasources} />
-                        <Campaign  selectItems={this.props.selectItems.campaigns} />
-                    </div>
-                    <div className="filterColumnButtons">
-                        <button className="filterButton" onClick={() => {this.onApply()}} >Apply</button>
-                    </div>
-                </div>
-            </div>
-        );
-    }
 }
 
 export default FilterPanel;

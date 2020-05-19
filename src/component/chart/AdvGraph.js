@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     TimeSeries
 } from 'pondjs';
@@ -32,165 +32,152 @@ const legend = [
     }
 ];
 
-class AdvGraph extends React.Component {
-    state = {
-        timerange: null,
-        clicksSeries: null,
-        impressionsSeries: null,
-    };
+function AdvGraph(props) {
 
-    componentDidMount() {
+    const [timerange, setTimerange] = useState(null);
+    const [clicksSeries, setClicksSeries] = useState(null);
+    const [impressionsSeries, setImpressionsSeries] = useState(null);
 
-        const clicksSeries = AdvGraph.createTimeSeries(this.props.data, 'Clicks');
-        const impressionsSeries = AdvGraph.createTimeSeries(this.props.data, 'Impressions');
+    useEffect(() => {
+        const clicksSeries = createTimeSeries(props.data, 'Clicks');
+        const impressionsSeries = createTimeSeries(props.data, 'Impressions');
 
-        this.setState({ timerange: clicksSeries.timerange(), clicksSeries, impressionsSeries });
+        setClicksSeries(clicksSeries);
+        setImpressionsSeries(impressionsSeries);
+        setTimerange(clicksSeries.timerange());
+    }, []);
+
+    if (!timerange || !clicksSeries || !impressionsSeries) {
+        return <p>Loading ...</p>;
     }
 
-    render() {
-
-        const { timerange, clicksSeries, impressionsSeries } = this.state;
-
-        if (!timerange || !clicksSeries || !impressionsSeries) {
-            return <p>Loading ...</p>;
-        }
-
-        return (
-            <div>
-                <Resizable>
-                    <ChartContainer
-                        title=""
-                        timeRange={timerange}
-                        format="%d.%m.'%y"
-                        // padding={20}
-                        enableDragZoom
-                        onTimeRangeChanged={this.handleTimeRangeChange}
-                    // timeAxisTickCount={5}
-                    >
-                        <ChartRow height="300">
-                            <YAxis
-                                id="clicks"
-                                label="Clicks"
-                                // labelOffset={-5}
-                                min={clicksSeries.min('Clicks')}
-                                max={clicksSeries.max('Clicks')}
-                                width="60"
-                                // showGrid
-                                // hideAxisLine
-                                transition={300}
-                                // format=",.0f"
-                                type="linear"
+    return (
+        <div>
+            <Resizable>
+                <ChartContainer
+                    title=""
+                    timeRange={timerange}
+                    format="%d.%m.'%y"
+                    // padding={20}
+                    enableDragZoom
+                    onTimeRangeChanged={() => setTimerange(timerange)}
+                // timeAxisTickCount={5}
+                >
+                    <ChartRow height="300">
+                        <YAxis
+                            id="clicks"
+                            label="Clicks"
+                            // labelOffset={-5}
+                            min={clicksSeries.min('Clicks')}
+                            max={clicksSeries.max('Clicks')}
+                            width="60"
+                            // showGrid
+                            // hideAxisLine
+                            transition={300}
+                            // format=",.0f"
+                            type="linear"
+                        />
+                        <Charts>
+                            <LineChart
+                                // key="clicks"
+                                axis="clicks"
+                                columns={['Clicks']}
+                                style={style}
+                                series={clicksSeries}
+                                interpolation="curveBasis"
                             />
-                            <Charts>
-                                <LineChart
-                                    // key="clicks"
-                                    axis="clicks"
-                                    columns={['Clicks']}
-                                    style={style}
-                                    series={clicksSeries}
-                                    interpolation="curveBasis"
-                                />
-                                <LineChart
-                                    // key="impressions"
-                                    axis="impressions"
-                                    columns={['Impressions']}
-                                    style={style}
-                                    series={impressionsSeries}
-                                    interpolation="curveBasis"
-                                />
-                            </Charts>
-                            <YAxis
-                                id="impressions"
-                                label="Impressions"
-                                // labelOffset={15}
-                                min={impressionsSeries.min('Impressions')}
-                                max={impressionsSeries.max('Impressions')}
-                                width="60"
-                                transition={300}
-                                // format=",.0f"
-                                type="linear"
+                            <LineChart
+                                // key="impressions"
+                                axis="impressions"
+                                columns={['Impressions']}
+                                style={style}
+                                series={impressionsSeries}
+                                interpolation="curveBasis"
                             />
-                        </ChartRow>
-                    </ChartContainer>
-                </Resizable>
-                <Legend
-                    type="line"
-                    style={style}
-                    categories={legend}
-                />
-            </div>
-        );
+                        </Charts>
+                        <YAxis
+                            id="impressions"
+                            label="Impressions"
+                            // labelOffset={15}
+                            min={impressionsSeries.min('Impressions')}
+                            max={impressionsSeries.max('Impressions')}
+                            width="60"
+                            transition={300}
+                            // format=",.0f"
+                            type="linear"
+                        />
+                    </ChartRow>
+                </ChartContainer>
+            </Resizable>
+            <Legend
+                type="line"
+                style={style}
+                categories={legend}
+            />
+        </div>
+    );
+
+}
+
+function createTimeSeries(data, name) {
+    if (!data || !name || !name.length || name.length === 0) {
+        return null;
     }
 
-    handleTimeRangeChange = timerange => {
-        this.setState({ timerange });
-    };
+    let pointsGroupedByDate = _(data)
+        .map(item => ({
+            time: getDateTime(item.Date),
+            [name]: normalizeNumber(item[name])
+        }))
+        .groupBy('time')
+        .mapValues(item => _.sumBy(item, name))
+        .toPairs()
+        .value()
+        ;
 
-    static createTimeSeries(data, name) {
-        if (!data || !name || !name.length || name.length == 0) {
-            return null;
-        }
+    return new TimeSeries({
+        name: name,
+        columns: ['time', name],
+        points: pointsGroupedByDate
+    });
+}
 
-        let pointsGroupedByDate = _(data)
-            .map(item => ({
-                time: AdvGraph.getDateTime(item.Date),
-                [name]: AdvGraph.normalizeNumber(item[name])
-            }))
-            .groupBy('time')
-            .mapValues(item => _.sumBy(item, name))
-            .toPairs()
-            .value()
-            // .map(item => [parseInt(item[0]), item[1]])
-            ;
-        
-        window.pointsGroupedByDate = pointsGroupedByDate;
-        console.log(pointsGroupedByDate);
-
-        return new TimeSeries({
-            name: name,
-            columns: ['time', name],
-            points: pointsGroupedByDate
-        });
+/**
+ * Converts string date to UTC
+ * @param {*} dateString date in format DD.MM.YYYY
+ * @returns UTC date time or null (also for invalid input)
+ */
+function getDateTime(dateString) {
+    if (!dateString || dateString == null || !dateString.length || dateString.length != 10) {
+        return null;
     }
 
-    /**
-     * Converts string date to UTC
-     * @param {*} dateString date in format DD.MM.YYYY
-     * @returns UTC date time or null (also for invalid input)
-     */
-    static getDateTime(dateString) {
-        if (!dateString || dateString == null || !dateString.length || dateString.length != 10) {
-            return null;
-        }
+    dateString = dateString.split(' ').join(); // trim off eventual spaces
 
-        dateString = dateString.split(' ').join(); // trim off eventual spaces
+    const dateArr = dateString.split('.');
 
-        const dateArr = dateString.split('.');
-
-        if (dateArr.length != 3) {
-            return null;
-        }
-
-        return new Date(dateArr[2], (dateArr[1] - 1), dateArr[0]).getTime();
+    if (dateArr.length !== 3) {
+        return null;
     }
 
-    /**
-     * Normalizes numeric string
-     * @param {*} str numeric string 
-     * @returns number; for non numeric strings returns 0
-     */
-    static normalizeNumber(str) {
-        if (typeof str === 'undefined' || str == null) {
-            return 0;
-        }
-        const num = parseInt(str);
-        if (isNaN(num)) {
-            return 0;
-        }
+    return new Date(dateArr[2], (dateArr[1] - 1), dateArr[0]).getTime();
+}
 
-        return num;
+/**
+ * Normalizes numeric string
+ * @param {*} str numeric string 
+ * @returns number; for non numeric strings returns 0
+ */
+function normalizeNumber(str) {
+    if (typeof str === 'undefined' || str == null) {
+        return 0;
+    }
+    const num = parseInt(str);
+    if (isNaN(num)) {
+        return 0;
     }
 
+    return num;
 }
 
 // Export example
